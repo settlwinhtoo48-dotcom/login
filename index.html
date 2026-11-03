@@ -31,6 +31,7 @@
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             transition:all 0.5s ease;
+            
         }
 
         .container:hover{
@@ -39,19 +40,35 @@
             box-shadow:0 0 35px rgb(255, 0, 251);
         }
         
-
         form{
-            margin-top:20px;
-            
-            
+            margin-top:80px;
         }
+        
 
         h2{
             color:rgb(255, 0, 251);
             font-size:40px;
             font-weight:bold;
             text-align:center;
-            
+            border-bottom:4px solid rgba(250, 5, 246, 0.247);
+            width:180px;
+            border-radius:25px;
+            transition:all 0.5s ease;
+        }
+
+        .head{
+            width:100%;
+            display: flex;
+            justify-content:center;
+            position:absolute;
+
+        }
+
+        h2:hover{
+            border-bottom:4px solid rgb(250, 5, 246);
+            width:180px;
+            border-radius:25px;
+            text-shadow:0 0 25px rgb(250, 5, 246); 
         }
 
         input{
@@ -100,7 +117,7 @@
         button{
             width:100px;
             height:50px;
-            margin-top:30px;
+            margin-top:40px;
             margin-left:125px;
             background:transparent;
             border:none;
