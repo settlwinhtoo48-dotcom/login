@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+    <style>
+        body{
+            background:url("space1.jpg");
+            background-repeat:no-repeat;
+            background-size:cover;
+            overflow:hidden;
+        }
+
+        .main{
+            position:absolute;
+            display:flex;
+            justify-content:center;
+            width:100%;
+            
+        }
+
+        
+        .container{
+            border:5px solid rgba(255, 255, 255, 0.15);
+            width:350px;
+            height:500px;
+            margin-top:40px;
+            background:rgba(52, 161, 145, 0.129);
+            border-radius:30px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition:all 0.5s ease;
+        }
+
+        .container:hover{
+            transform:scale(1.035);
+            border:5px solid rgb(255, 0, 251);
+            box-shadow:0 0 35px rgb(255, 0, 251);
+        }
+        
+
+        form{
+            margin-top:20px;
+            
+            
+        }
+
+        h2{
+            color:rgb(255, 0, 251);
+            font-size:40px;
+            font-weight:bold;
+            text-align:center;
+            
+        }
+
+        input{
+            width:250px;
+            margin-left:50px;
+            margin-top:40px;
+            height:45px;
+            border-radius:15px;
+            background:transparent;
+            border:none;
+            border-bottom:4px solid rgba(255, 255, 255, 0.15); 
+            color:rgb(255, 0, 251);
+            transition:all 0.5s ease;
+            text-align:center;
+            font-size:23px;
+        }
+
+        input::placeholder{
+            color:rgb(255, 0, 251);
+            font-size:20px;
+            text-align:center;
+        }
+
+        input:hover{
+            transform:scale(1.1);
+            border-bottom:4px solid rgb(255, 0, 251);
+            box-shadow:0 0 25px rgb(234, 0, 255);
+        }
+
+        input:focus{
+            outline:none;
+        }
+
+        .heart{
+            position:absolute;
+            pointer-events:none;
+            font-size:20px;
+            animation:mov 4s ease;
+        }
+
+        @keyframes mov{
+            from{transform:translateY(-200px) rotate(0);opacity:1;}
+            to{transform:translateY(0px) rotate(90deg);opacity:0;}
+        }
+
+        button{
+            width:100px;
+            height:50px;
+            margin-top:30px;
+            margin-left:125px;
+            background:transparent;
+            border:none;
+            border-bottom:4px solid rgba(255, 255, 255, 0.15); 
+            color:rgb(255, 0, 251);
+            transition:all 0.5s ease;
+            text-align:center;
+            font-size:23px;
+            border-radius:24px;
+        }
+
+        button:hover{
+            transform:scale(1.1);
+            border-bottom:4px solid rgb(255, 0, 251);
+            box-shadow:0 0 25px rgb(234, 0, 255);
+        }
+
+        button:focus{
+            outline:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="head"><h2>Sign Up</h2></div>
+            <form id="registerForm">
+                <input type="text" id="name" placeholder="Enter Your Name" required>
+                <input type="email" id="email" placeholder="Enter Your Email" required>
+                <input type="password" id="password" placeholder="Enter Your Password" required>
+
+        <button type="submit">Submit</button>
+    </form>
+        </div>
+    </div>
+    <p id="message"></p>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert('အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ!');
+                    document.getElementById('registerForm').reset();
+                } else {
+                    document.getElementById('message').innerText = 'အမှားအယွင်းရှိသည်: ' + data.error;
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('message').innerText = 'ဆာဗာသို့ ချိတ်ဆက်၍ မရပါ။';
+            }
+        });
+
+        let stop=false;
+        document.addEventListener('mousemove',function(e){
+            if(stop) return;
+            stop=true;
+            setTimeout(() => {stop=false;},250);
+            let heart=document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML="💜";
+            heart.style.left=(e.clientX-15)+'px';
+            heart.style.top=(e.clientY+170)+'px';
+            let size=Math.random()*30+20;
+            heart.style.fontSize=size+'px';
+            document.body.appendChild(heart);
+            setTimeout(() => {heart.remove()},4000);
+        })
+    </script>
+</body>
+</html>
