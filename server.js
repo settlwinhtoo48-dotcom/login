@@ -1,11 +1,17 @@
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
+const path = require('path'); // <-- ဒီနေရာမှာ path ကို require လုပ်ပေးပါ
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Root URL ဝင်လာပါက index.html ကို ပြရန် (ဒီနေရာမှာ ထည့်ပါ)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Supabase PostgreSQL Database နဲ့ ချိတ်ဆက်ခြင်း
 const pool = new Pool({
